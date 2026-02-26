@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Own Adventure</title>
+   <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <div id="story-box">
+    <p id="scene-text"></p>
+    <div id="choices"></div>
+    <button id="restart-btn" onclick="goToScene('start')">↩ Start over</button>
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────────
+    // THE STORY — each scene has:
+    //   text:    what the reader sees
+    //   choices: an array of buttons
+    //            each choice has a "label" and a "next" scene key
+    // ─────────────────────────────────────────
+
+    let story = {
+
+      start: {
+        text: "you are right here right now",
+        choices: [
+          { label: "go here", next: "river" },
+          { label: "go there",      next: "dark-forest" }
+        ]
+      },
+
+      river: {
+        text: "you are now here" ,
+        choices: [
+          { label: "go to this", next: "house" },
+          { label: "go to that",   next: "village" }
+        ]
+      },
+
+      "dark-forest": {
+        text: "you have gone there",
+        choices: [
+          { label: "say yes",      next: "door" },
+          { label: "or say no",      next: "start" }
+        ]
+      },
+
+      house: {
+        text: "you were here but are now at this",
+        choices: [
+          { label: "are you lost",  next: "end-map" },
+          { label: "or have you found",  next: "end-key" }
+        ]
+      },
+
+      village: {
+        text: "you were here but have gone to that",
+        choices: [
+          { label: "turn left",    next: "end-village" },
+          { label: "or continue right",     next: "end-map" }
+        ]
+      },
+
+      door: {
+        text: "you are now there and have said no",
+        choices: [
+          { label: "still in pursuit",  next: "end-door" },
+          { label: "or have you arrived", next: "end-village" }
+        ]
+      },
+
+      // ── ENDINGS ──
+
+      "end-map": {
+        text: "have you yet decided?",
+        choices: [],
+        ending: true
+      },
+
+      "end-key": {
+        text: "so you have decided",
+        choices: [],
+        ending: true
+      },
+
+      "end-village": {
+        text: "you chose, and now you are here once more",
+        choices: [],
+        ending: true
+      },
+
+      "end-door": {
+        text: "did you decide?",
+        choices: [],
+        ending: true
+      }
+
+    };
+
+    // ─────────────────────────────────────────
+    // ENGINE — this reads the story object
+    // and builds the page for any scene
+    // ─────────────────────────────────────────
+
+    function goToScene(sceneKey) {
+
+      // Step 1: Look up the current scene using its key
+      let scene = story[sceneKey];
+
+      // Step 2: Show the scene text
+      document.getElementById("scene-text").textContent = scene.text;
+
+      // Step 3: Clear old buttons
+      let choicesBox = document.getElementById("choices");
+      choicesBox.innerHTML = "";
+
+      // Step 4: Create a button for each choice
+      for (let i = 0; i < scene.choices.length; i++) {
+
+        let choice = scene.choices[i]; // grab one choice
+
+        let btn = document.createElement("button"); // make a button
+        btn.textContent = choice.label;             // label it
+
+        // When clicked, go to the next scene
+        btn.onclick = function() {
+          goToScene(choice.next);
+        };
+
+        choicesBox.appendChild(btn); // add it to the page
+      }
+
+      // Step 5: If this is an ending, show the restart button
+      if (scene.ending) {
+        document.getElementById("restart-btn").style.display = "block";
+      } else {
+        document.getElementById("restart-btn").style.display = "none";
+      }
+
+    }
+
+    // Start the story on page load
+    goToScene("start");
+
+  </script>
+
+</body>
+</html>

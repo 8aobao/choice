@@ -1,0 +1,52 @@
+
+
+  body {
+    background: white;
+    color: black;
+    font-family: "Times New Roman", serif;
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+
+  #scene-text {
+    font-size: 1.5em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: white;
+    background-color: blue;
+    padding: 0.5em;
+  }
+
+  #choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+  }
+
+  button {
+    background:  radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(87, 156, 199, 1) 40%, rgba(255, 255, 255, 1) 100%);
+    border: 1px solid black;
+    height: 10vh;
+    color: black;
+    padding: 10px 36px;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 50%;
+  }
+
+  button:hover {
+    background: radial-gradient(circle,rgba(87, 156, 199, 1) 0%, rgba(255, 255, 255, 1) 40%, rgba(87, 156, 199, 1) 100%);
+    color: white;
+    
+  }
+
+  #restart-btn {
+    display: none;
+    margin-top: 20px;
+  }
+
+
